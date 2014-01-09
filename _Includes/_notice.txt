@@ -1,0 +1,5 @@
+The files in this directory are modified files from the
+NetLinx Common Library (NCL), which is licensed under the MPL.
+
+You can get the current version of the NCL at
+http://ncl-url.org ??
