@@ -18,16 +18,15 @@ include 'string'
 DEFINE_DEVICE
 
 // IP Devices
-dvReceiver_1 				= 0:3:0;
-dvAppleTV 				= 0:5:0;
-//dvBluray				= 0:6:0;
-dvWeather				= 0:10:0;
+dvAppleTV 				= 0:4:0;
+//dvBluray				= 0:5:0;
+dvWeather				= 0:6:0;
 
-// Serial Devices
-dvBluray 				= 5001:1:0;		// 
+dvBluray				= 5001:1:0;//7
 
 // IR Devices
-dvCableBox				= 5001:9:0;		// Pace,RGN200N,UR5U-9020L-MC,Settop Box,1.irl
+dvCableBox				= 5001:3:0;		// 9 Pace,RGN200N,UR5U-9020L-MC,Settop Box,1.irl
+//dvBDP					= 5001:10:0;		// for debuging
 
 // Touch panels
 dvTP1_TP_iPad	 			= 10001:1:0;		// iPad
@@ -44,12 +43,9 @@ dvTP1_TP_Zones				= 10001:10:0;
 vdvWeather				= 33001:1:0;
 vdvAppleTV				= 33002:1:0;
 vdvSonos 				= 33003:1:0;
+//vdvBluray				= 33004:1:0;
 
-vdvReceiver_1_1 			= 41001:1:0;		// zone 1 - main zone
-vdvReceiver_1_2 			= 41001:2:0;		// zone 2 - powered zone 2
-vdvReceiver_1_3 			= 41001:3:0;		// zone 3 - non powered
-
-vdvBluray				= 41002:1:0;		// 
+vdvBluray				= 41001:1:0;
 
 (***********************************************************)
 (*               CONSTANT DEFINITIONS GO BELOW             *)
@@ -66,8 +62,6 @@ DATA_INIT				= 252;
 PWR					= 255;
 
 // rooms/zones
-
-
 // First floor
 LIVING_ROOM				= 1;
 KITCHEN					= 2;
@@ -296,48 +290,6 @@ VOLATILE CHAR cTPInputSubpageNames[18][20] = {
     'Maintanence'
 }
 
-// Receivers Inputs
-AVR_AIRPLAY 				= 1
-AVR_DVR					= 2
-AVR_SATELLITE				= 3
-AVR_GAME				= 4
-AVR_AUXILIARY				= 5
-AVR_PC					= 6
-AVR_EXTRA				= 7
-AVR_DVD					= 8
-AVR_CD					= 9
-AVR_TUNER				= 10
-AVR_SERVER				= 11
-AVR_IRADIO				= 12
-AVR_USB					= 13
-AVR_NETWORK				= 14
-AVR_SOURCE				= 15
-
-VOLATILE CHAR cAVRInputs[15][10] = {
-    'AIRPLAY',
-    'DVR',
-    'SATELLITE',
-    'GAME',
-    'AUXILIARY',
-    'PC',
-    'EXTRA',
-    'DVD',
-    'CD',
-    'TUNER',
-    'SERVER',
-    'IRADIO',
-    'USB',
-    'NETWORK',
-    'SOURCE'
-}
-
-// Tuner bands
-AVR_FM 					= 1
-AVR_AM					= 2
-
-// Reciever Levels
-AVR_VOLUME_LVL				= 1
-
 // Generic buttons
 _PLAY					= 1
 _STOP					= 2
@@ -392,10 +344,6 @@ volatile dev dvTP_TouchPanels[] = {
     dvTP1_TP_iPad
 };
 
-volatile dev dvTP_Receiever1[] = {
-    dvTP1_Receiver1
-};
-
 volatile dev dvTP_AppleTV[] = {
     dvTP1_AppleTV
 };
@@ -406,13 +354,6 @@ volatile dev dvTP_Bluray[] = {
 
 volatile dev dvTP_CableBox[] = {
     dvTP1_CableBox
-};
-
-// Receiver
-volatile dev vdvReceivers[] = {
-    vdvReceiver_1_1,
-    vdvReceiver_1_2,
-    vdvReceiver_1_3
 };
 
 // Tuner buttons
@@ -440,9 +381,9 @@ volatile integer nTunerBtns[] = {
 // GUI Levels
 VOLUME_LEVEL_FAMILY_ROOM		= 1;
 
-// Blu-ray/DVD Buttons
+// Blu-ray/DVD Buttons in additional to standard media controls
 BR_DVD_FUNCTION				= 65
-BR_DVD_SETUP				= 66
+//BR_DVD_SETUP				= 66
 BR_DVD_CLEAR				= 80
 BR_DVD_LIST				= 86	// HOME Button
 BR_DVD_DISPLAY				= 99
@@ -470,7 +411,6 @@ volatile integer nBlurayBtns[] = {
     _SELECT,
     _EXIT,
     BR_DVD_FUNCTION,
-    BR_DVD_SETUP,
     BR_DVD_CLEAR,
     BR_DVD_LIST,// HOME Button
     BR_DVD_DISPLAY,
@@ -487,6 +427,8 @@ BR_DVD_FB_STOP				= 242
 BR_DVD_FB_PAUSE				= 243
 BR_DVD_FB_SCAN_FWD			= 246
 BR_DVD_FB_SCAN_REV			= 247
+
+
 
 // Apple TV
 volatile integer nAppleTVBtns[] = {
@@ -1531,24 +1473,34 @@ struct _Touchpanel {
     INTEGER nZoneSelected
 }
 
-// Receivers
-struct _Receivers {
-    INTEGER nPower
-    INTEGER nVolume
-    INTEGER nMute
-    INTEGER nCurrentInput
-}
-
-// radio tuners
-struct _Tuners { 
-    INTEGER nTunerBand
-    CHAR cTunerChannel[6]
-    INTEGER nTunerPreset
-}
-
 // Blu-ray/DVD
+struct _Disc_Info {
+    INTEGER number
+    CHAR duration[11]
+    LONG numofTitles
+    LONG numofTracks
+    CHAR discType[12]
+    CHAR id
+}
+
+struct _Title_Info {
+    INTEGER number
+    CHAR duration[11]
+    LONG numofTracks
+    INTEGER discNumber
+}
+
+struct _Track_Info {
+    INTEGER number
+    CHAR duraction[11]
+    INTEGER discNumber
+}
+
 struct _Bluray_DVD {
-    INTEGER nDisc
+    INTEGER nOnline
+    _Disc_Info DiscInfo
+    _Title_Info TitleInfo
+    _Track_Info TrackInfo
 }
 
 // TV
@@ -1558,7 +1510,6 @@ struct _CableBox {
     INTEGER nPresetBeingEdited
     CHAR cPresetTemp[3]		// temporarily holds the new preset channel
 };
-
 
 // Celias stuff
 struct _Client {
@@ -1597,22 +1548,11 @@ DEFINE_VARIABLE
 // TP
 volatile _Touchpanel sTouchpanel[1];
 
-// Receivers
-volatile char nReceiver_IP[1][15] = {
-    {'192.168.1.100'}
-};
-
-persistent _Receivers sReceivers[3];
-
-// Tuners
-volatile _Tuners sTuners[3];
-
 // Cable box
 persistent _CableBox sCableBox;
 
 // Sonos
 volatile integer sonos_start_port = 180
-
 
 // Apple TV
 volatile char nAppleTV_IP[] = '192.168.1.149'; //'apple-tv.local';
@@ -1620,9 +1560,10 @@ volatile char nAppleTV_Port[] = '80';
 volatile integer nAppleTV_Protocol = IP_TCP;
 
 // Blu-ray/DVD
-volatile char nBluray_IP[] = '192.168.1.148';
-volatile integer nBluray_Port = 8102;
-
+volatile char nBluray_IP[] = '192.168.1.140';
+volatile char nBluray_Port[] = '8102';
+volatile integer nBluray_Protocol = IP_TCP;
+volatile _Bluray_DVD uBluray_DVD
 
 // celia stuff
 volatile _Appointment sAppointment;	
@@ -1655,25 +1596,9 @@ DEFINE_MUTUALLY_EXCLUSIVE
 (*        SUBROUTINE/FUNCTION DEFINITIONS GO BELOW         *)
 (***********************************************************)
 
-DEFINE_CALL 'Connect to Bluray' {
-    ip_client_open(dvBluray.PORT, nBluray_IP, nBluray_Port, IP_TCP);
-    send_string 0, "'bluray is starting up, send ip client open'";
-}
-
-DEFINE_CALL 'Power on Receiver'/*(INTEGER nReceiver)*/ {
-    on[vdvReceivers[1],PWR];
-}
-
 DEFINE_CALL 'Room off'(nRoom) {
-    off[vdvReceivers[nRoom],PWR];
+    
 }
-
-DEFINE_FUNCTION fnCheckAVRInput(INTEGER nReceiver, INTEGER nInput) {
-    if (sReceivers[nReceiver].nCurrentInput != nInput){
-	send_command vdvReceivers[nReceiver], "'INPUT-',cAVRInputs[nInput],',1'";
-    }
-}
-
 
 DEFINE_FUNCTION readStuffFromFile(CHAR cFileName[]){
     STACK_VAR SLONG slFileHandle     // stores the tag that represents the file (or and error code)
@@ -1731,21 +1656,15 @@ DEFINE_START
 #WARN 'Remove this next line, once the TP is updated with zones'
 sTouchpanel[1].nZoneSelected = LIVING_ROOM;
 
-// establish bluray connection
-//Call 'Connect to Bluray';
-
 // celia stuff
 TIMELINE_CREATE(MASSAGE_TIMELINE,TimeArray_1_Second,1,TIMELINE_RELATIVE,TIMELINE_REPEAT);
 
 // Lighting
 //DEFINE_MODULE 'LutronHomeWorksP5_dr1_0_117' modLights(vdvLights, dvLights);
 
-// Receivers
-DEFINE_MODULE 'Onkyo_TXNR616_Comm_dr1_0_0' modReceiver1(vdvReceiver_1_1,dvReceiver_1);
-//DEFINE_MODULE 'Onkyo_TXNR616_Comm_dr1_0_0' modReceiver2(vdvReceiver_2_1,dvReceiver_2);
-
 // Bluray/DVD
 DEFINE_MODULE 'Pioneer_BDP23FD_Comm_dr1_0_0' modBluray(vdvBluray,dvBluray);
+//DEFINE_MODULE 'Pioneer_BDP-23FD_Comm' modBluray(vdvBluray, dvBluray, nBluray_IP, nBluray_Port, nBluray_Protocol);
 
 // TV's
 //DEFINE_MODULE '<module name>' modTV1(<parameter list>);
@@ -1779,7 +1698,7 @@ data_event[dvTP_TouchPanels] {
 	
 	switch(dvTP_TouchPanels[nTP]) {
 	    case dvTP1_TP_iPad: {
-		send_level dvTP1_Receiver1,VOLUME_LEVEL_FAMILY_ROOM,sReceivers[1].nVolume;
+		//send_level dvTP1_Receiver1,VOLUME_LEVEL_FAMILY_ROOM,sReceivers[1].nVolume;
 	    }
 	}
     }
@@ -1903,10 +1822,6 @@ button_event[dvTP1_TP_iPad,nMenuBarInputSelection] {
 	//nTP = get_last(dvTP1);
 	nTP = 1;
 	
-	// power on receiver if its off
-	if(![vdvReceiver_1_1,PWR])
-	    CALL 'Power on Receiver';
-	
 	// bring subpage forward
 	//send_command dvTP1_TP_iPad, "'^SSH-2000,Input Controls'";
 	//send_command dvTP1_TP_iPad, "'^SSH-3000,',cTPSubpageNames[nMenuBarInputSelection[nButton]],''";
@@ -1918,36 +1833,15 @@ button_event[dvTP1_TP_iPad,nMenuBarInputSelection] {
 	    case SOURCE_VIDEO: 
 	    case SOURCE_CABLE_TV: {
 		send_command dvTP1_TP_iPad, "'@PPN-[paneRight]TV'";
-		
-		if(sTouchpanel[nTP].nZoneSelected == LIVING_ROOM)
-		    fnCheckAVRInput(1,AVR_SATELLITE);
-		else if(sTouchpanel[nTP].nZoneSelected == GAME_ROOM)
-		    fnCheckAVRInput(2,AVR_SATELLITE);
-		
 	    }
 	    case SOURCE_DVR: {
 		send_command dvTP1_TP_iPad, "'@PPN-[paneRight][Theater]Cable DVR Global'";
-		
-		if(sTouchpanel[nTP].nZoneSelected == LIVING_ROOM)
-		    fnCheckAVRInput(1,AVR_SATELLITE);
-		else if(sTouchpanel[nTP].nZoneSelected == GAME_ROOM)
-		    fnCheckAVRInput(2,AVR_SATELLITE);
 	    }
 	    case SOURCE_BLURAY: {
 		send_command dvTP1_TP_iPad, "'@PPN-[paneRight]Bluray'";
-		
-		if(sTouchpanel[nTP].nZoneSelected == LIVING_ROOM)
-		    fnCheckAVRInput(1,AVR_DVD);
-		else if(sTouchpanel[nTP].nZoneSelected == GAME_ROOM)
-		    fnCheckAVRInput(2,AVR_DVD);
 	    }
 	    case SOURCE_APPLETV: {
 		send_command dvTP1_TP_iPad, "'@PPN-[paneRight]Apple TV'";
-		
-		if(sTouchpanel[nTP].nZoneSelected == LIVING_ROOM)
-		    fnCheckAVRInput(1,AVR_DVR);
-		else if(sTouchpanel[nTP].nZoneSelected == GAME_ROOM)
-		    fnCheckAVRInput(2,AVR_DVR);
 	    }
 	    case SOURCE_AUX: {
 		send_command dvTP1_TP_iPad, "'@PPN-'";
@@ -1960,32 +1854,18 @@ button_event[dvTP1_TP_iPad,nMenuBarInputSelection] {
 	    }
 	    case SOURCE_RADIO: {
 		send_command dvTP1_TP_iPad, "'@PPN-'";
-		
-		if(sTouchpanel[nTP].nZoneSelected == LIVING_ROOM)
-		    fnCheckAVRInput(1,AVR_TUNER);
-		else if(sTouchpanel[nTP].nZoneSelected == GAME_ROOM)
-		    fnCheckAVRInput(2,AVR_TUNER);
 	    }
 	    case SOURCE_INTERNET_RADIO: {
 		send_command dvTP1_TP_iPad, "'@PPN-'";
-		
-		if(sTouchpanel[nTP].nZoneSelected == LIVING_ROOM)
-		    fnCheckAVRInput(1,AVR_IRADIO);
-		else if(sTouchpanel[nTP].nZoneSelected == GAME_ROOM)
-		    fnCheckAVRInput(2,AVR_IRADIO);
 	    }
 	    case SOURCE_AIRPLAY: {
 		send_command dvTP1_TP_iPad, "'@PPN-'";
-		
-		if(sTouchpanel[nTP].nZoneSelected == LIVING_ROOM)
-		    fnCheckAVRInput(1,AVR_AIRPLAY);
-		else if(sTouchpanel[nTP].nZoneSelected == GAME_ROOM)
-		    fnCheckAVRInput(2,AVR_AIRPLAY);
 	    }
 	}
     }
 }
 
+/*
 BUTTON_EVENT[dvTP_Receiever1,nVolumeBtns] {
     push: {
 	stack_var integer nButton;
@@ -2017,268 +1897,40 @@ BUTTON_EVENT[dvTP_Receiever1,nVolumeBtns] {
 	}
     }
 }
-
-
-DATA_EVENT[vdvReceivers[1]] {			// Receivers 
-    ONLINE: {
-	send_command vdvReceivers[1],"'PROPERTY-IP_Address,',nReceiver_IP[1]";
-	send_command vdvReceivers[1],"'PROPERTY-Port,60128'";
-	send_command vdvReceivers[1],"'reinit'";
-	
-	send_string 0, "'Receiver 1 is online'";
-	
-	wait 5 {
-	    send_command vdvReceivers[1], "'?INPUT'";
-	}
-	
-    }
-    OFFLINE: {
-	send_string 0, "'Receiver 1 is offline'";
-    }
-    COMMAND: {
-	send_string 0, "'Receiver 1, zone 1 Incoming command: ', data.text";
-	
-	SELECT {
-	    ACTIVE (FIND_STRING(DATA.TEXT,'INPUT-',1)): {
-		REMOVE_STRING(DATA.TEXT,'INPUT-',1);
-		SELECT {
-		    ACTIVE (FIND_STRING(DATA.TEXT,'AIRPLAY',1)):
-			sReceivers[1].nCurrentInput = AVR_AIRPLAY;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'DVR',1)):
-			sReceivers[1].nCurrentInput = AVR_DVR;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'SATELLITE',1)):
-			sReceivers[1].nCurrentInput = AVR_SATELLITE;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'GAME',1)):
-			sReceivers[1].nCurrentInput = AVR_GAME;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'AUXILIARY',1)):
-			sReceivers[1].nCurrentInput = AVR_AUXILIARY;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'PC',1)):
-			sReceivers[1].nCurrentInput = AVR_PC;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'EXTRA',1)):
-			sReceivers[1].nCurrentInput = AVR_EXTRA;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'DVD',1)):
-			sReceivers[1].nCurrentInput = AVR_DVD;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'CD',1)):
-			sReceivers[1].nCurrentInput = AVR_CD;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'TUNER',1)):
-			sReceivers[1].nCurrentInput = AVR_TUNER;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'SERVER',1)):
-			sReceivers[1].nCurrentInput = AVR_SERVER;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'IRADIO',1)):
-			sReceivers[1].nCurrentInput = AVR_IRADIO;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'USB',1)):
-			sReceivers[1].nCurrentInput = AVR_USB;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'NETWORK',1)):
-			sReceivers[1].nCurrentInput = AVR_NETWORK;
-		}
-	    }
-	    ACTIVE (FIND_STRING(DATA.TEXT,'BAND-',1)): {
-		REMOVE_STRING(DATA.TEXT,'BAND-',1);
-		SELECT {
-		    ACTIVE (FIND_STRING(DATA.TEXT,'FM',1)):
-			//sReceivers[1].nTunerBand = AVR_FM;
-			sTuners[1].nTunerBand = AVR_FM;
-		    ACTIVE (FIND_STRING(DATA.TEXT,'AM',1)):
-			//sReceivers[1].nTunerBand = AVR_AM;
-			sTuners[1].nTunerBand = AVR_AM;
-		}
-	    }
-	    ACTIVE (FIND_STRING(DATA.TEXT,'XCH-',1)): {
-		REMOVE_STRING(DATA.TEXT,'XCH-',1);
-		
-		//sReceivers[1].cTunerChannel = DATA.TEXT;
-		sTuners[1].cTunerChannel = DATA.TEXT;
-	    }
-	    ACTIVE (FIND_STRING(DATA.TEXT,'TUNERPRESET-',1)): {
-		REMOVE_STRING(DATA.TEXT,'TUNERPRESET-',1);
-		
-		//sReceivers[1].nTunerPreset = atoi(DATA.TEXT);
-		sTuners[1].nTunerPreset = atoi(DATA.TEXT);
-	    }
-	}
-    }
-}
-
-DATA_EVENT[vdvReceivers[2]] {
-    ONLINE: {
-	wait 5 {
-	    send_command vdvReceivers[2], "'?INPUT'";
-	}
-    }
-    COMMAND: {
-	send_string 0, "'Receiver 1, zone 2 Incomding command: ', data.text";
-	
-	SELECT {
-	    ACTIVE (FIND_STRING(DATA.TEXT,'INPUT-',1)): {
-		REMOVE_STRING(DATA.TEXT,'INPUT-',1)
-		SELECT {
-		    ACTIVE (FIND_STRING(DATA.TEXT,'AIRPLAY',1)):
-			sReceivers[2].nCurrentInput = AVR_AIRPLAY
-		    ACTIVE (FIND_STRING(DATA.TEXT,'DVR',1)):
-			sReceivers[2].nCurrentInput = AVR_DVR
-		    ACTIVE (FIND_STRING(DATA.TEXT,'SATELLITE',1)):
-			sReceivers[2].nCurrentInput = AVR_SATELLITE
-		    ACTIVE (FIND_STRING(DATA.TEXT,'GAME',1)):
-			sReceivers[2].nCurrentInput = AVR_GAME
-		    ACTIVE (FIND_STRING(DATA.TEXT,'PC',1)):
-			sReceivers[2].nCurrentInput = AVR_PC
-		    ACTIVE (FIND_STRING(DATA.TEXT,'DVD',1)):
-			sReceivers[2].nCurrentInput = AVR_DVD
-		    ACTIVE (FIND_STRING(DATA.TEXT,'CD',1)):
-			sReceivers[2].nCurrentInput = AVR_CD
-		    ACTIVE (FIND_STRING(DATA.TEXT,'TUNER',1)):
-			sReceivers[2].nCurrentInput = AVR_TUNER
-		    ACTIVE (FIND_STRING(DATA.TEXT,'SERVER',1)):
-			sReceivers[2].nCurrentInput = AVR_SERVER
-		    ACTIVE (FIND_STRING(DATA.TEXT,'IRADIO',1)):
-			sReceivers[2].nCurrentInput = AVR_IRADIO
-		    ACTIVE (FIND_STRING(DATA.TEXT,'USB',1)):
-			sReceivers[2].nCurrentInput = AVR_USB
-		    ACTIVE (FIND_STRING(DATA.TEXT,'NETWORK',1)):
-			sReceivers[2].nCurrentInput = AVR_NETWORK
-		    ACTIVE (FIND_STRING(DATA.TEXT,'SOURCE',1)):
-			sReceivers[2].nCurrentInput = AVR_SOURCE
-		}
-	    }
-	}
-    }
-}
-/*
-DATA_EVENT[vdvReceivers[3]] {
-    COMMAND: {
-	send_string 0, "'Receiver 1, zone 3 Incomding command: ', data.text";
-	
-	SELECT {
-	    ACTIVE (FIND_STRING(DATA.TEXT,'INPUT-',1)): {
-		REMOVE_STRING(DATA.TEXT,'INPUT-',1)
-		SELECT {
-		    ACTIVE (FIND_STRING(DATA.TEXT,'AIRPLAY',1)):
-			sReceivers[3].nCurrentInput = AVR_AIRPLAY
-		    ACTIVE (FIND_STRING(DATA.TEXT,'DVR',1)):
-			sReceivers[3].nCurrentInput = AVR_DVR
-		    ACTIVE (FIND_STRING(DATA.TEXT,'SATELLITE',1)):
-			sReceivers[3].nCurrentInput = AVR_SATELLITE
-		    ACTIVE (FIND_STRING(DATA.TEXT,'GAME',1)):
-			sReceivers[3].nCurrentInput = AVR_GAME
-		    ACTIVE (FIND_STRING(DATA.TEXT,'PC',1)):
-			sReceivers[3].nCurrentInput = AVR_PC
-		    ACTIVE (FIND_STRING(DATA.TEXT,'DVD',1)):
-			sReceivers[3].nCurrentInput = AVR_DVD
-		    ACTIVE (FIND_STRING(DATA.TEXT,'CD',1)):
-			sReceivers[3].nCurrentInput = AVR_CD
-		    ACTIVE (FIND_STRING(DATA.TEXT,'TUNER',1)):
-			sReceivers[3].nCurrentInput = AVR_TUNER
-		    ACTIVE (FIND_STRING(DATA.TEXT,'SERVER',1)):
-			sReceivers[3].nCurrentInput = AVR_SERVER
-		    ACTIVE (FIND_STRING(DATA.TEXT,'IRADIO',1)):
-			sReceivers[3].nCurrentInput = AVR_IRADIO
-		    ACTIVE (FIND_STRING(DATA.TEXT,'USB',1)):
-			sReceivers[3].nCurrentInput = AVR_USB
-		    ACTIVE (FIND_STRING(DATA.TEXT,'NETWORK',1)):
-			sReceivers[3].nCurrentInput = AVR_NETWORK
-		}
-	    }
-	}
-    }
-}*/
-
-CHANNEL_EVENT[vdvReceivers[1],255] {		// powered on
-    ON:
-	sReceivers[1].nPower = 1;
-    OFF:
-	sReceivers[1].nPower = 0;
-}
-
-CHANNEL_EVENT[vdvReceivers[2],255] {
-    ON:
-	sReceivers[2].nPower = 1;
-    OFF:
-	sReceivers[2].nPower = 0;
-}
-
-CHANNEL_EVENT[vdvReceivers[3],255] {
-    ON:
-	sReceivers[3].nPower = 1;
-    OFF:
-	sReceivers[3].nPower = 0;
-}
-
-CHANNEL_EVENT[vdvReceivers[1],_MUTE] {		// mute on
-    ON: {
-	sReceivers[1].nMute = 1;
-	
-	if(sTouchpanel[1].nZoneSelected == LIVING_ROOM)
-	    [dvTP1_Receiver1,_TOGGLE_MUTE] = sReceivers[1].nMute;
-    }
-    OFF: {
-	sReceivers[1].nMute = 0;
-	
-	if(sTouchpanel[1].nZoneSelected == LIVING_ROOM)
-	    [dvTP1_Receiver1,_TOGGLE_MUTE] = sReceivers[1].nMute;
-    }
-}
-
-CHANNEL_EVENT[vdvReceivers[2],_MUTE] {
-    ON: {
-	sReceivers[2].nMute = 1;
-    }
-    OFF: {
-	sReceivers[2].nMute = 0;
-    }
-}
-
-CHANNEL_EVENT[vdvReceivers[3],_MUTE] {
-    ON:
-	sReceivers[3].nMute = 1;
-    OFF:
-	sReceivers[3].nMute = 0;
-}
-
-LEVEL_EVENT[vdvReceivers[1],VOLUME_LEVEL_FAMILY_ROOM] {		// volume level
-    sReceivers[1].nVolume = level.value; 	// out of 255
-    
-    send_level dvTP1_Receiver1,VOLUME_LEVEL_FAMILY_ROOM,sReceivers[1].nVolume;
-}
-
-LEVEL_EVENT[vdvReceivers[2],1] {
-    sReceivers[2].nVolume = level.value; 	// out of 255
-}
-
-LEVEL_EVENT[vdvReceivers[3],1] {
-    sReceivers[3].nVolume = level.value; 	// out of 255
-}
-
-BUTTON_EVENT[dvTP1_Receiver1,nTunerBtns] {
-    PUSH: {
-	stack_var integer nButton;
-	nButton = get_last(nTunerBtns);
-	
-	pulse[vdvReceiver_1_1,nButton]
-    }
-}
+*/
 
 DATA_EVENT[vdvBluray] {
     ONLINE: {
 	send_string 0, "'Blu-ray Player is Online'";
+	uBluray_DVD.nOnline = true;
     }
     OFFLINE: {
-	// establish bluray connection
-	//Call 'Connect to Bluray';
-	
 	send_string 0, "'Blu-ray Player is Offline'";
+	uBluray_DVD.nOnline = false;
     }
     ONERROR: {
-	// establish bluray connection
-	//Call 'Connect to Bluray';
+	uBluray_DVD.nOnline = false;
     }
     STRING: {
 	send_string 0, "'from bluray: ', data.text";
     }
     COMMAND: {
+	send_string 0, "'from bluray: ', data.text";
 	SELECT {
 	    // DISCINFO-1,--:--:--.--,-2147483648,-2147483648,AUDIO_VIDEO,,
 	    ACTIVE (FIND_STRING(DATA.TEXT,'DISCINFO-',1)): {
 		REMOVE_STRING(DATA.TEXT,'DISCINFO-',1)
+		
+		// 
+		uBluray_DVD.DiscInfo.number = ATOI(LEFT_STRING(DATA.TEXT,1));
+		REMOVE_STRING(DATA.TEXT,',',1);
+		
+		uBluray_DVD.DiscInfo.duration = MID_STRING(DATA.TEXT, 2, 11);
+		
+		uBluray_DVD.DiscInfo.numofTitles = ATOI(MID_STRING(DATA.TEXT, 2, 11));
+		//uBluray_DVD.DiscInfo.numofTracks = 
+		//uBluray_DVD.DiscInfo.discType =
+		//uBluray_DVD.DiscInfo.id = 
 		
 	    }
 	    // TITLEINFO-2,--:--:--.--,-2147483648,1
@@ -2295,16 +1947,10 @@ DATA_EVENT[vdvBluray] {
     }
 }
 
-BUTTON_EVENT[dvTP1_Bluray,nBlurayBtns] {
+BUTTON_EVENT[dvTP1_Bluray,0] {//nBlurayBtns] {
     push: {
-	stack_var integer nButton;
-	nButton = get_last(nBlurayBtns);
-	
-	switch(nBlurayBtns[nButton]) {
-	    case _PLAY: {
-		send_string dvBluray, "''";
-	    }
-	}
+	send_string 0, "'to bdp: ', itoa(button.input.channel)"
+	PULSE[vdvBluray,button.input.channel];
     }
 }
 
@@ -2730,6 +2376,14 @@ DEFINE_PROGRAM
 
 [dvTP1_Celia,MASSAGE_ACTIVE_START_BTN] = (sAppointment.nSessionActive);
 
+
+//bluray
+[dvTP1_Bluray,_PLAY] = [vdvBluray,241]
+[dvTP1_Bluray,_STOP] = ([vdvBluray,242] && [vdvBluray,255])
+[dvTP1_Bluray,_PAUSE] = [vdvBluray,243]
+[dvTP1_Bluray,_SCAN_FWD] = [vdvBluray,246]
+[dvTP1_Bluray,_SCAN_REV] = [vdvBluray,247]
+[dvTP1_Bluray,_POWER] = [vdvBluray,255]
 (***********************************************************)
 (*                     END OF PROGRAM                      *)
 (*        DO NOT PUT ANY CODE BELOW THIS COMMENT           *)
