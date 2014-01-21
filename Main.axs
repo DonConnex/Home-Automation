@@ -19,10 +19,9 @@ DEFINE_DEVICE
 
 // IP Devices
 dvAppleTV 				= 0:4:0;
-//dvBluray				= 0:5:0;
 dvWeather				= 0:6:0;
 
-dvBluray				= 5001:1:0;//7
+dvBluray				= 5001:1:0;
 
 // IR Devices
 dvCableBox				= 5001:3:0;		// 9 Pace,RGN200N,UR5U-9020L-MC,Settop Box,1.irl
@@ -498,6 +497,9 @@ STB_DVR_LIST				= 67;
 STB_DVR_LIVE				= 68;
 STB_ASTERIK				= 69;	// *
 STB_AMPERSIGN				= 70; 	// #
+
+STB_CLEAR				= 9;
+STB_ENTER				= 20;
 
 STB_CURRENT_CHANNEL_NUM			= 1;
 STB_CURRENT_CHANNEL_NAME		= 2;
@@ -1402,6 +1404,570 @@ volatile char cCableBoxTVChannelNames[279][30] = {
     {'MetroCast On Demand'}
 };
 
+// Icon location
+CH2_ABC_WMAR_BALTIMORE_icon		= 1;
+CH3_PBS_WETA_DC_icon			= 2;
+CH4_NBC_WRC_DC_icon			= 3;
+CH5_FOX_WTTG_DC_icon			= 4;
+CH6_MY20_WDCA_DC_icon			= 5;
+CH7_ABC_WJLA_DC_icon			= 6;
+CH8_CW_WDCW_DC_icon			= 7;
+CH9_CBS_WUSA_DC_icon			= 8;
+CH10_METROCAST_LOCAL_icon		= 9;
+CH12_ION_WPXW_DC_icon			= 10;
+CH15_QVC_icon				= 11;
+CH16_CSPAN_icon				= 12;
+CH17_HSN_icon				= 13;
+CH18_CSPAN2_icon			= 14;
+CH20_EWTN_icon				= 15;
+CH21_TBN_icon				= 16;
+CH22_PBS_WMPT_ANNAPOLIS_icon		= 17;
+CH23_ESPN_icon				= 18;
+CH24_ESPN2_icon				= 19;
+CH25_COMCAST_SPORTSNET_PLUS_icon	= 20;
+CH26_COMCAST_SPORTSNET_icon		= 21;
+CH27_SPEED_icon				= 22;
+CH28_NBC_SPORTS_NETWORK_icon		= 23;
+CH29_MASN_icon			 	= 24;
+CH30_MASN2_icon				= 25;
+CH32_OUTDOOR_CHANNEL_icon		= 26;
+CH34_CNN_icon				= 27;
+CH35_HLN_icon				= 28;
+CH36_CNBC_icon				= 29;
+CH37_THE_WEATHER_CHANNEL_icon		= 30;
+CH38_FOX_NEWS_icon			= 31;
+CH39_MSNBC_icon				= 32;
+CH40_PENTAGON_CHANNEL_icon		= 33;
+CH41_USA_icon				= 34;
+CH42_ABC_FAMILY_icon			= 35;
+CH43_HALLMARK_CHANNEL_icon		= 36;
+CH44_HALLMARK_MOVIE_CHANNEL_icon	= 37;
+CH45_TBS_icon				= 38;
+CH46_TV_LAND_icon			= 39;
+CH47_TNT_icon				= 40;
+CH48_A_AND_E_icon			= 41;		// A&E
+CH49_SYFY_icon				= 42;
+CH50_NICKELODEON_icon			= 43;
+CH51_CARTOON_NETWORK_icon		= 44;
+CH52_DISNEY_CHANNEL_icon		= 45;
+CH53_DISCOVERY_CHANNEL_icon		= 46;
+CH54_TRAVEL_CHANNEL_icon		= 47;
+CH55_ANIMAL_PLANET_icon			= 48;
+CH56_NATIONAL_GEOGRAPHIC_icon		= 49;
+CH57_HISTORY_icon			= 50;
+CH58_TRU_TV_icon			= 51;
+CH59_BRAVO_icon				= 52;
+CH60_LIFETIME_icon			= 53;
+CH61_LMN_icon				= 54;
+CH62_DISNEY_JUNIOR_icon			= 55;
+CH63_E_icon				= 56;		// E!
+CH64_FOOD_NETWORK_icon			= 57;
+CH65_HGTV_icon				= 58;
+CH66_TLC_icon				= 59;
+CH67_AMC_icon				= 60;
+CH68_TURNER_CLASSIC_MOVIES_icon		= 61;
+CH69_FX_MOVIE_NETWORK_icon		= 62;
+CH70_FX_icon				= 63;
+CH71_SPIKE_icon				= 64;
+CH72_COMEDY_CENTRAL_icon		= 65;
+CH73_GAC_icon				= 66;
+CH74_OXYGEN_icon			= 67;
+CH75_BET_icon				= 68;
+CH76_MTV_icon				= 69;
+CH77_VH1_icon				= 70;
+CH78_CMT_icon				= 71;
+CH79_JEWELRY_TV_icon			= 72;
+CH95_GOVERNMENT_LOCAL_icon		= 73;
+CH96_EDUCATIONAL_LOCAL_icon		= 74;
+CH97_ZAP2IT_GUIDE_icon			= 75;
+CH98_EDUCATIONAL_CSM_icon		= 76;
+CH100_THE_HUB_icon			= 145;
+CH101_NICKTOONS_icon			= 146;
+CH102_SPROUT_icon			= 147;
+CH103_NICK_JR_icon			= 148;
+CH104_DISNEY_XD_icon			= 149;
+CH105_TEEN_NICK_icon			= 150;
+CH106_BOOMERANG_icon			= 151;
+CH107_WETA_FAMILY_DC_icon		= 77;
+CH108_WETA_UK_DC_icon			= 78;
+CH109_TV_ONE_icon			= 152;
+CH110_MOVIEPLEX_icon			= 153;
+CH111_CHILLER_icon			= 154;
+CH114_NAT_GEO_WILD_icon			= 155;
+CH115_INVESTIGATIN_DISCOVERY_icon	= 156;
+CH116_BBC_AMERICA_icon			= 157;
+CH117_BLOOMBERG_icon			= 158;
+CH119_BIOGRAPHY_icon			= 159;
+CH120_H2_icon				= 160;
+CH121_SCIENCE_icon			= 161;
+CH122_MILITARY_CHANNEL_icon		= 162;
+CH123_NBC_WRC_COZI_TV_DC_icon		= 79;
+CH124_WUSA_WEATHER_RADAR_DC_icon	= 80;
+CH125_WDCW_ANTENNA_TV_DC_icon		= 81;
+CH126_WDCW_THIS_TV_DC_icon		= 82;
+CH127_WJLA_LIVE_WELL_NETWORK_DC_icon	= 83;
+CH128_WJLA_METV_DC_icon			= 0;
+CH130_OWN_icon				= 163;
+CH131_DESTINATION_AMERICA_icon		= 164;
+CH132_REELZ_CHANNEL_icon		= 165;
+CH134_LIFETIME_REAL_WOMEN_icon		= 166;
+CH136_STYLE_icon			= 167;
+CH140_GSN_icon				= 168;
+CH141_HRTV_icon				= 169;
+CH142_ESPNU_icon			= 170;
+CH143_NFL_NETWORK_icon			= 171;
+CH144_MLB_NETWORK_icon			= 172;
+CH145_GOLF_CHANNEL_icon			= 173;
+CH146_G4_icon				= 174;
+CH147_FOX_BUSINESS_NETWORK_icon		= 175;
+CH148_FOX_SOCCER_icon			= 176;
+CH149_CBS_SPORTS_NETWORK_icon		= 177;
+CH151_MTV2_icon				= 178;
+CH152_MTV_HITS_icon			= 179;
+CH153_VH1_CLASSIC_icon			= 180;
+CH154_VH1_SOUL_icon			= 181;
+CH155_CMT_PURE_COUNTRY_icon		= 182;
+CH156_UP_icon				= 183;
+CH158_THE_WORD_NETWORK_icon		= 184;
+CH200_DISCOVERY_FIT_AND_HEALTH_icon	= 130;
+CH201_DIY_icon				= 131;
+CH202_COOKING_CHANNEL_icon		= 132;
+CH203_WE_icon				= 133;
+CH204_FUSE_icon				= 134;
+CH209_NFL_REDZONE_icon			= 135;
+CH210_ESPNEWS_icon			= 136;
+CH211_ESPN_CLASSIC_icon			= 137;
+CH212_YES_NATIONAL_icon			= 138;
+CH214_FOX_COLLEGE_SPORTS_ATLANTIC_icon	= 139;
+CH215_FOX_COLLEGE_SPORTS_CENTRAL_icon	= 140;
+CH216_FOX_COLLEGE_SPORTS_PACIFIC_icon	= 141;
+CH217_FUEL_TV_icon			= 142;
+CH270_INDEPENDENT_FILM_CHANNEL_icon	= 143;
+CH300_HBO_icon				= 197;
+CH301_HBO2_icon				= 198;
+CH302_HBO_SIGNATURE_icon		= 199;
+CH303_HBO_FAMILY_icon			= 200;
+CH304_HBO_COMEDY_icon			= 201;
+CH305_HBO_ZONE_icon			= 202;
+CH325_HBO_HD_icon			= 203;
+CH350_CINEMAX_icon			= 192;
+CH351_MOREMAX_icon			= 193;
+CH352_ACTIONMAX_icon			= 194;
+CH353_THRILLERMAX_icon			= 195;
+CH375_CINEMAX_HD_icon			= 196;
+CH400_SHOWTIME_icon			= 204;
+CH401_SHOWTIME2_icon			= 205;
+CH402_SHOWTIME_SHOWCASE_icon		= 206;
+CH403_SHOWTIME_EXTREME_icon		= 207;
+CH404_SHOWTIME_WOMEN_icon		= 208;
+CH405_SHOWTIME_FAMILY_ZONE_icon		= 209;
+CH406_SHOWTIME_NEXT_icon		= 210;
+CH407_THE_MOVIE_CHANNEL_icon		= 211;
+CH408_THE_MOVIE_CHANNEL_XTRA_icon	= 212;
+CH409_FLIX_icon				= 213;
+CH425_SHOWTIME_HD_icon			= 214;
+CH450_STARZ_icon			= 215;
+CH451_STARZ_EDGE_icon			= 216;
+CH452_STARZ_IN_BLACK_icon		= 217;
+CH453_STARZ_KIDS_AND_FAMILY_icon	= 218;
+CH454_STARZ_CINEMA_icon			= 219;
+CH455_STARZ_COMEDY_icon			= 220;
+CH456_ENCORE_icon			= 221;
+CH457_ENCORE_ACTION_icon		= 222;
+CH458_ENCORE_DRAMA_icon			= 223;
+CH459_ENCORE_LOVE_icon			= 224;
+CH460_ENCORE_SUSPENSE_icon		= 225;
+CH461_ENCORE_WESTERNS_icon		= 226;
+CH462_ENCORE_FAMILY_icon		= 227;
+CH475_STARZ_HD_icon			= 228;
+CH702_ABC_WMAR_HD_BALTIMORE_icon	= 84;
+CH703_PBS_WETA_HD_DC_icon		= 85;
+CH704_NBC_WRC_HD_DC_icon		= 86;
+CH705_FOX_WTTG_HD_DC_icon		= 87;
+CH706_MY20_WDCA_HD_DC_icon		= 88;
+CH707_ABC_WJLA_HD_DC_icon		= 89;
+CH709_CBS_WUSA_HD_DC_icon		= 90;
+CH715_QVC_HD_icon			= 91;
+CH723_ESPN_HD_icon			= 92;
+CH724_ESPN2_HD_icon			= 93;
+CH725_COMCAST_SPORTSNET_PLUS_HD_icon	= 94;
+CH726_COMCAST_SPORTSNET_HD_icon		= 95;
+CH727_SPEED_HD_icon			= 96;
+CH728_NBC_SPORTS_NETWORK_HD_icon	= 97;
+CH729_MASN_HD_icon			= 98;
+CH730_GOLF_CHANNEL_HD_icon		= 186;
+CH732_OUTDOOR_CHANNEL_HD_icon		= 99;
+CH733_MASN_HD_2_icon			= 100;
+CH734_CNN_HD_icon			= 101;
+CH737_THE_WEATHER_CHANNEL_HD_icon	= 102;
+CH738_FOX_NEWS_HD_icon			= 103;
+CH741_UNIVERSAL_HD_icon			= 189;
+CH742_ABC_FAMILY_HD_icon		= 104;
+CH745_TBS_HD_icon			= 105;
+CH747_TNT_HD_icon			= 106;
+CH748_A_AND_E_HD_icon			= 107;		// A&E
+CH749_SYFY_HD_icon			= 108;
+CH752_DISNEY_CHANNEL_HD_icon		= 109;
+CH753_DISCOVERY_CHANNEL_HD_icon		= 110;
+CH755_ANIMAL_PLANET_HD_icon		= 111;
+CH756_NATIONAL_GEOGRAPHIC_HD_icon	= 112;
+CH757_HISTORY_HD_icon			= 113;
+CH759_BRAVO_HD_icon			= 114;
+CH760_LIFETIME_HD_icon			= 115;
+CH761_LMN_HD_icon			= 116;
+CH763_E_HD_icon				= 117;		// E!
+CH764_FOOD_NETWORK_HD_icon		= 118;
+CH765_HGTV_HD_icon			= 119;
+CH766_TLC_HD_icon			= 120;
+CH767_AMC_HD_icon			= 121;
+CH770_FX_HD_icon			= 122;
+CH774_OXYGEN_HD_icon			= 123;
+CH780_VELOCITY_HD_icon			= 124;
+CH781_PALLADIA_HD_icon			= 190;
+CH782_USA_HD_icon			= 125;
+CH783_MGM_HD_icon			= 191;
+CH784_SCIENCE_HD_icon			= 187;
+CH785_NFL_NETWORK_HD_icon		= 185;
+CH786_DESINATION_AMERICA_HD_icon	= 188;
+CH787_NFL_REDZONE_HD_icon		= 144;
+CH800_INDEMAND_MOVIES_AND_EVENTS_1_icon	= 127;
+CH801_INDEMAND_MOVIES_AND_EVENTS_2_icon	= 127;
+CH802_INDEMAND_MOVIES_AND_EVENTS_3_icon	= 127;
+CH803_INDEMAND_MOVIES_AND_EVENTS_4_icon	= 127;
+CH804_INDEMAND_MOVIES_AND_EVENTS_5_icon	= 127;
+CH805_INDEMAND_MOVIES_AND_EVENTS_6_icon	= 127;
+CH806_INDEMAND_MOVIES_AND_EVENTS_7_icon	= 127;
+CH899_ADULT_PAY_PER_VIEW_icon		= 128;
+CH903_MUSIC_HIT_LIST_icon		= 126;
+CH904_MUSIC_HIP_HOP_AND_R_AND_B_icon	= 126;
+CH905_MUSIC_MC_UNIVERSITY_icon		= 126;
+CH906_MUSIC_DANCE_ELECTRONICA_icon	= 126;
+CH907_MUSIC_RAP_icon			= 126;
+CH908_MUSIC_HIPHOP_CLASSICS_icon	= 126;
+CH909_MUSIC_THROWBACK_JAMZ_icon		= 126;
+CH910_MUSIC_R_AND_B_CLASSICS_icon	= 126;
+CH911_MUSIC_R_AND_B_SOUL_icon		= 126;
+CH912_MUSIC_GOSPEL_icon			= 126;
+CH913_MUSIC_REGGE_icon			= 126;
+CH914_MUSIC_CLASSIC_ROCK_icon		= 126;
+CH915_MUSIC_RETRO_ROCK_icon		= 126;
+CH916_MUSIC_ROCK_icon			= 126;
+CH917_MUSIC_METAL_icon			= 126;
+CH918_MUSIC_ALTERNATIVE_icon		= 126;
+CH919_MUSIC_CLASSIC_ALTERNATIVE_icon	= 126;
+CH920_MUSIC_ADULT_ALTERNATIVE_icon	= 126;
+CH921_MUSIC_SOFT_ROCK_icon		= 126;
+CH922_MUSIC_POP_HITS_icon		= 126;
+CH923_MUSIC_90S_icon			= 126;
+CH924_MUSIC_80S_icon			= 126;
+CH925_MUSIC_70S_icon			= 126;
+CH926_MUSIC_SOLID_GOLD_OLDIES_icon	= 126;
+CH927_MUSIC_PARTY_FAVORITES_icon	= 126;
+CH928_MUSIC_STAGE_AND_SCREEN_icon	= 126;
+CH929_MUSIC_KIDZ_ONLY_icon		= 126;
+CH930_MUSIC_TODDLER_TUNES_icon		= 126;
+CH931_MUSIC_TODAYS_COUNTRY_icon		= 126;
+CH932_MUSIC_TRUE_COUNTRY_icon		= 126;
+CH933_MUSIC_CLASSIC_COUNTRY_icon	= 126;
+CH934_MUSIC_CONTEMPORARY_CHRISTIAN_icon	= 126;
+CH935_MUSIC_SOUNDS_OF_THE_SEASON_icon	= 126;
+CH936_MUSIC_SOUNDSCAPE_icon		= 126;
+CH937_MUSIC_SMOOTH_JAZZ_icon		= 126;
+CH938_MUSIC_JAZZ_icon			= 126;
+CH939_MUSIC_BLUES_icon			= 126;
+CH940_MUSIC_SINGERS_AND_SWING_icon	= 126;
+CH941_MUSIC_EASY_LISTENING_icon		= 126;
+CH942_MUSIC_CLASSICAL_MASTERPIECES_icon	= 126;
+CH943_MUSIC_LIGHT_CLASSICAL_icon	= 126;
+CH944_MUSIC_MUSICA_URBANA_icon		= 126;
+CH945_MUSIC_POP_LATINO_icon		= 126;
+CH946_MUSIC_TROPICALES_icon		= 126;
+CH947_MUSIC_MEXICANA_icon		= 126;
+CH948_MUSIC_ROMANCES_icon		= 126;
+CH999_METROCAST_ON_DEMAND_icon		= 129;
+
+volatile integer nCableBoxTVFavIcons[] = {
+    CH2_ABC_WMAR_BALTIMORE_icon,
+    CH3_PBS_WETA_DC_icon,
+    CH4_NBC_WRC_DC_icon,
+    CH5_FOX_WTTG_DC_icon,
+    CH6_MY20_WDCA_DC_icon,
+    CH7_ABC_WJLA_DC_icon,
+    CH8_CW_WDCW_DC_icon,
+    CH9_CBS_WUSA_DC_icon,
+    CH10_METROCAST_LOCAL_icon,
+    CH12_ION_WPXW_DC_icon,
+    CH15_QVC_icon,
+    CH16_CSPAN_icon,
+    CH17_HSN_icon,
+    CH18_CSPAN2_icon,
+    CH20_EWTN_icon,
+    CH21_TBN_icon,
+    CH22_PBS_WMPT_ANNAPOLIS_icon,
+    CH23_ESPN_icon,
+    CH24_ESPN2_icon,
+    CH25_COMCAST_SPORTSNET_PLUS_icon,
+    CH26_COMCAST_SPORTSNET_icon,
+    CH27_SPEED_icon,
+    CH28_NBC_SPORTS_NETWORK_icon,
+    CH29_MASN_icon,
+    CH30_MASN2_icon,
+    CH32_OUTDOOR_CHANNEL_icon,
+    CH34_CNN_icon,
+    CH35_HLN_icon,
+    CH36_CNBC_icon,
+    CH37_THE_WEATHER_CHANNEL_icon,
+    CH38_FOX_NEWS_icon,
+    CH39_MSNBC_icon,
+    CH40_PENTAGON_CHANNEL_icon,
+    CH41_USA_icon,
+    CH42_ABC_FAMILY_icon,
+    CH43_HALLMARK_CHANNEL_icon,
+    CH44_HALLMARK_MOVIE_CHANNEL_icon,
+    CH45_TBS_icon,
+    CH46_TV_LAND_icon,
+    CH47_TNT_icon,
+    CH48_A_AND_E_icon,
+    CH49_SYFY_icon,
+    CH50_NICKELODEON_icon,
+    CH51_CARTOON_NETWORK_icon,
+    CH52_DISNEY_CHANNEL_icon,
+    CH53_DISCOVERY_CHANNEL_icon,
+    CH54_TRAVEL_CHANNEL_icon,
+    CH55_ANIMAL_PLANET_icon,
+    CH56_NATIONAL_GEOGRAPHIC_icon,
+    CH57_HISTORY_icon,
+    CH58_TRU_TV_icon,
+    CH59_BRAVO_icon,
+    CH60_LIFETIME_icon,
+    CH61_LMN_icon,
+    CH62_DISNEY_JUNIOR_icon,
+    CH63_E_icon,
+    CH64_FOOD_NETWORK_icon,
+    CH65_HGTV_icon,
+    CH66_TLC_icon,
+    CH67_AMC_icon,
+    CH68_TURNER_CLASSIC_MOVIES_icon,
+    CH69_FX_MOVIE_NETWORK_icon,
+    CH70_FX_icon,
+    CH71_SPIKE_icon,
+    CH72_COMEDY_CENTRAL_icon,
+    CH73_GAC_icon,
+    CH74_OXYGEN_icon,
+    CH75_BET_icon,
+    CH76_MTV_icon,
+    CH77_VH1_icon,
+    CH78_CMT_icon,
+    CH79_JEWELRY_TV_icon,
+    CH95_GOVERNMENT_LOCAL_icon,
+    CH96_EDUCATIONAL_LOCAL_icon,
+    CH97_ZAP2IT_GUIDE_icon,
+    CH98_EDUCATIONAL_CSM_icon,
+    CH100_THE_HUB_icon,
+    CH101_NICKTOONS_icon,
+    CH102_SPROUT_icon,
+    CH103_NICK_JR_icon,
+    CH104_DISNEY_XD_icon,
+    CH105_TEEN_NICK_icon,
+    CH106_BOOMERANG_icon,
+    CH107_WETA_FAMILY_DC_icon,
+    CH108_WETA_UK_DC_icon,
+    CH109_TV_ONE_icon,
+    CH110_MOVIEPLEX_icon,
+    CH111_CHILLER_icon,
+    CH114_NAT_GEO_WILD_icon,
+    CH115_INVESTIGATIN_DISCOVERY_icon,
+    CH116_BBC_AMERICA_icon,
+    CH117_BLOOMBERG_icon,
+    CH119_BIOGRAPHY_icon,
+    CH120_H2_icon,
+    CH121_SCIENCE_icon,
+    CH122_MILITARY_CHANNEL_icon,
+    CH123_NBC_WRC_COZI_TV_DC_icon,
+    CH124_WUSA_WEATHER_RADAR_DC_icon,
+    CH125_WDCW_ANTENNA_TV_DC_icon,
+    CH126_WDCW_THIS_TV_DC_icon,
+    CH127_WJLA_LIVE_WELL_NETWORK_DC_icon,
+    CH128_WJLA_METV_DC_icon,
+    CH130_OWN_icon,
+    CH131_DESTINATION_AMERICA_icon,
+    CH132_REELZ_CHANNEL_icon,
+    CH134_LIFETIME_REAL_WOMEN_icon,
+    CH136_STYLE_icon,
+    CH140_GSN_icon,
+    CH141_HRTV_icon,
+    CH142_ESPNU_icon,
+    CH143_NFL_NETWORK_icon,
+    CH144_MLB_NETWORK_icon,
+    CH145_GOLF_CHANNEL_icon,
+    CH146_G4_icon,
+    CH147_FOX_BUSINESS_NETWORK_icon,
+    CH148_FOX_SOCCER_icon,
+    CH149_CBS_SPORTS_NETWORK_icon,
+    CH151_MTV2_icon,
+    CH152_MTV_HITS_icon,
+    CH153_VH1_CLASSIC_icon,
+    CH154_VH1_SOUL_icon,
+    CH155_CMT_PURE_COUNTRY_icon,
+    CH156_UP_icon,
+    CH158_THE_WORD_NETWORK_icon,
+    CH200_DISCOVERY_FIT_AND_HEALTH_icon,
+    CH201_DIY_icon,
+    CH202_COOKING_CHANNEL_icon,
+    CH203_WE_icon,
+    CH204_FUSE_icon,
+    CH209_NFL_REDZONE_icon,
+    CH210_ESPNEWS_icon,
+    CH211_ESPN_CLASSIC_icon,
+    CH212_YES_NATIONAL_icon,
+    CH214_FOX_COLLEGE_SPORTS_ATLANTIC_icon,
+    CH215_FOX_COLLEGE_SPORTS_CENTRAL_icon,
+    CH216_FOX_COLLEGE_SPORTS_PACIFIC_icon,
+    CH217_FUEL_TV_icon,
+    CH270_INDEPENDENT_FILM_CHANNEL_icon,
+    CH300_HBO_icon,
+    CH301_HBO2_icon,
+    CH302_HBO_SIGNATURE_icon,
+    CH303_HBO_FAMILY_icon,
+    CH304_HBO_COMEDY_icon,
+    CH305_HBO_ZONE_icon,
+    CH325_HBO_HD_icon,
+    CH350_CINEMAX_icon,
+    CH351_MOREMAX_icon,
+    CH352_ACTIONMAX_icon,
+    CH353_THRILLERMAX_icon,
+    CH375_CINEMAX_HD_icon,
+    CH400_SHOWTIME_icon,
+    CH401_SHOWTIME2_icon,
+    CH402_SHOWTIME_SHOWCASE_icon,
+    CH403_SHOWTIME_EXTREME_icon,
+    CH404_SHOWTIME_WOMEN_icon,
+    CH405_SHOWTIME_FAMILY_ZONE_icon,
+    CH406_SHOWTIME_NEXT_icon,
+    CH407_THE_MOVIE_CHANNEL_icon,
+    CH408_THE_MOVIE_CHANNEL_XTRA_icon,
+    CH409_FLIX_icon,
+    CH425_SHOWTIME_HD_icon,
+    CH450_STARZ_icon,
+    CH451_STARZ_EDGE_icon,
+    CH452_STARZ_IN_BLACK_icon,
+    CH453_STARZ_KIDS_AND_FAMILY_icon,
+    CH454_STARZ_CINEMA_icon,
+    CH455_STARZ_COMEDY_icon,
+    CH456_ENCORE_icon,
+    CH457_ENCORE_ACTION_icon,
+    CH458_ENCORE_DRAMA_icon,
+    CH459_ENCORE_LOVE_icon,
+    CH460_ENCORE_SUSPENSE_icon,
+    CH461_ENCORE_WESTERNS_icon,
+    CH462_ENCORE_FAMILY_icon,
+    CH475_STARZ_HD_icon,
+    CH702_ABC_WMAR_HD_BALTIMORE_icon,
+    CH703_PBS_WETA_HD_DC_icon,
+    CH704_NBC_WRC_HD_DC_icon,
+    CH705_FOX_WTTG_HD_DC_icon,
+    CH706_MY20_WDCA_HD_DC_icon,
+    CH707_ABC_WJLA_HD_DC_icon,
+    CH709_CBS_WUSA_HD_DC_icon,
+    CH715_QVC_HD_icon,
+    CH723_ESPN_HD_icon,
+    CH724_ESPN2_HD_icon,
+    CH725_COMCAST_SPORTSNET_PLUS_HD_icon,
+    CH726_COMCAST_SPORTSNET_HD_icon,
+    CH727_SPEED_HD_icon,
+    CH728_NBC_SPORTS_NETWORK_HD_icon,
+    CH729_MASN_HD_icon,
+    CH730_GOLF_CHANNEL_HD_icon,
+    CH732_OUTDOOR_CHANNEL_HD_icon,
+    CH733_MASN_HD_2_icon,
+    CH734_CNN_HD_icon,
+    CH737_THE_WEATHER_CHANNEL_HD_icon,
+    CH738_FOX_NEWS_HD_icon,
+    CH741_UNIVERSAL_HD_icon,
+    CH742_ABC_FAMILY_HD_icon,
+    CH745_TBS_HD_icon,
+    CH747_TNT_HD_icon,
+    CH748_A_AND_E_HD_icon,
+    CH749_SYFY_HD_icon,
+    CH752_DISNEY_CHANNEL_HD_icon,
+    CH753_DISCOVERY_CHANNEL_HD_icon,
+    CH755_ANIMAL_PLANET_HD_icon,
+    CH756_NATIONAL_GEOGRAPHIC_HD_icon,
+    CH757_HISTORY_HD_icon,
+    CH759_BRAVO_HD_icon,
+    CH760_LIFETIME_HD_icon,
+    CH761_LMN_HD_icon,
+    CH763_E_HD_icon,
+    CH764_FOOD_NETWORK_HD_icon,
+    CH765_HGTV_HD_icon,
+    CH766_TLC_HD_icon,
+    CH767_AMC_HD_icon,
+    CH770_FX_HD_icon,
+    CH774_OXYGEN_HD_icon,
+    CH780_VELOCITY_HD_icon,
+    CH781_PALLADIA_HD_icon,
+    CH782_USA_HD_icon,
+    CH783_MGM_HD_icon,
+    CH784_SCIENCE_HD_icon,
+    CH785_NFL_NETWORK_HD_icon,
+    CH786_DESINATION_AMERICA_HD_icon,
+    CH787_NFL_REDZONE_HD_icon,
+    CH800_INDEMAND_MOVIES_AND_EVENTS_1_icon,
+    CH801_INDEMAND_MOVIES_AND_EVENTS_2_icon,
+    CH802_INDEMAND_MOVIES_AND_EVENTS_3_icon,
+    CH803_INDEMAND_MOVIES_AND_EVENTS_4_icon,
+    CH804_INDEMAND_MOVIES_AND_EVENTS_5_icon,
+    CH805_INDEMAND_MOVIES_AND_EVENTS_6_icon,
+    CH806_INDEMAND_MOVIES_AND_EVENTS_7_icon,
+    CH899_ADULT_PAY_PER_VIEW_icon,
+    CH903_MUSIC_HIT_LIST_icon,
+    CH904_MUSIC_HIP_HOP_AND_R_AND_B_icon,
+    CH905_MUSIC_MC_UNIVERSITY_icon,
+    CH906_MUSIC_DANCE_ELECTRONICA_icon,
+    CH907_MUSIC_RAP_icon,
+    CH908_MUSIC_HIPHOP_CLASSICS_icon,
+    CH909_MUSIC_THROWBACK_JAMZ_icon,
+    CH910_MUSIC_R_AND_B_CLASSICS_icon,
+    CH911_MUSIC_R_AND_B_SOUL_icon,
+    CH912_MUSIC_GOSPEL_icon,
+    CH913_MUSIC_REGGE_icon,
+    CH914_MUSIC_CLASSIC_ROCK_icon,
+    CH915_MUSIC_RETRO_ROCK_icon,
+    CH916_MUSIC_ROCK_icon,
+    CH917_MUSIC_METAL_icon,
+    CH918_MUSIC_ALTERNATIVE_icon,
+    CH919_MUSIC_CLASSIC_ALTERNATIVE_icon,
+    CH920_MUSIC_ADULT_ALTERNATIVE_icon,
+    CH921_MUSIC_SOFT_ROCK_icon,
+    CH922_MUSIC_POP_HITS_icon,
+    CH923_MUSIC_90S_icon,
+    CH924_MUSIC_80S_icon,
+    CH925_MUSIC_70S_icon,
+    CH926_MUSIC_SOLID_GOLD_OLDIES_icon,
+    CH927_MUSIC_PARTY_FAVORITES_icon,
+    CH928_MUSIC_STAGE_AND_SCREEN_icon,
+    CH929_MUSIC_KIDZ_ONLY_icon,
+    CH930_MUSIC_TODDLER_TUNES_icon,
+    CH931_MUSIC_TODAYS_COUNTRY_icon,
+    CH932_MUSIC_TRUE_COUNTRY_icon,
+    CH933_MUSIC_CLASSIC_COUNTRY_icon,
+    CH934_MUSIC_CONTEMPORARY_CHRISTIAN_icon,
+    CH935_MUSIC_SOUNDS_OF_THE_SEASON_icon,
+    CH936_MUSIC_SOUNDSCAPE_icon,
+    CH937_MUSIC_SMOOTH_JAZZ_icon,
+    CH938_MUSIC_JAZZ_icon,
+    CH939_MUSIC_BLUES_icon,
+    CH940_MUSIC_SINGERS_AND_SWING_icon,
+    CH941_MUSIC_EASY_LISTENING_icon,
+    CH942_MUSIC_CLASSICAL_MASTERPIECES_icon,
+    CH943_MUSIC_LIGHT_CLASSICAL_icon,
+    CH944_MUSIC_MUSICA_URBANA_icon,
+    CH945_MUSIC_POP_LATINO_icon,
+    CH946_MUSIC_TROPICALES_icon,
+    CH947_MUSIC_MEXICANA_icon,
+    CH948_MUSIC_ROMANCES_icon,
+    CH999_METROCAST_ON_DEMAND_icon
+}
 
 // celia stuff
 MASSAGE_TYPE_SWEDISH = 1;
@@ -1508,7 +2074,7 @@ struct _CableBox {
     INTEGER nCurrentChannel
     INTEGER nPresets[20]
     INTEGER nPresetBeingEdited
-    CHAR cPresetTemp[3]		// temporarily holds the new preset channel
+    CHAR cPresetTemp[1][3]		// temporarily holds the new preset channel
 };
 
 // Celias stuff
@@ -1552,7 +2118,7 @@ volatile _Touchpanel sTouchpanel[1];
 persistent _CableBox sCableBox;
 
 // Sonos
-volatile integer sonos_start_port = 180
+volatile integer sonos_start_port = 180;
 
 // Apple TV
 volatile char nAppleTV_IP[] = '192.168.1.149'; //'apple-tv.local';
@@ -2046,6 +2612,13 @@ BUTTON_EVENT[dvTP_CableBox,nCableBoxBtns]{
 	    case STB_FASTFORWARD: {
 		TO[dvCableBox,nCableBoxBtns[temp]];
 	    }
+	    case STB_CLEAR: {
+		//
+		send_command dvTP_CableBox, "'^TXT-4,0,'";
+		
+		//
+		sCableBox.cPresetTemp[1] = 0;
+	    }
 	    case STB_0:	// 0 = 10
 	    case STB_1:
 	    case STB_2:
@@ -2057,13 +2630,32 @@ BUTTON_EVENT[dvTP_CableBox,nCableBoxBtns]{
 	    case STB_8:
 	    case STB_9: {
 		if(sCableBox.nPresetBeingEdited > 0) {
-		    cTemp = ITOA(nCableBoxBtns[temp] - 10);
+		    sCableBox.cPresetTemp[1] = "sCableBox.cPresetTemp[1],ITOA(nCableBoxBtns[temp] - 10)"
 		    
-		    // sCableBox.cPresetTemp = 
+		    send_command dvTP_CableBox, "'^TXT-4,0,',sCableBox.cPresetTemp[1]"; 
 		}
 		else {
 		    pulse[dvCableBox,nCableBoxBtns[temp]];
 		}
+	    }
+	    case STB_ENTER: {
+		
+		// setup new icon
+		send_command dvTP1_TP_iPad, "'^BMF-',ITOA(sCableBox.nPresetBeingEdited),',0,%I ', ITOA(nCableBoxTVFavIcons[0])";	//"'^BMF-<variable text address range>,<button states range>,<data>'"
+		
+		// setup new preset
+		sCableBox.nPresets[sCableBox.nPresetBeingEdited] = sCableBox.cPresetTemp[1];
+		
+		// show page
+		send_command dvTP1_TP_iPad, "'^SSH-2000,[Input Controls]TV'";
+		// hide page
+		send_command dvTP1_TP_iPad, "'^SHD-2000,[Input Controls]TV- Keypad'";
+		
+		// clear which preset is being edited
+		sCableBox.nPresetBeingEdited = 0;
+		
+		// clear the preset temp holder
+		sCableBox.cPresetTemp[1] = 0;
 	    }
 	    default: {
 		pulse[dvCableBox,nCableBoxBtns[temp]];
@@ -2092,8 +2684,7 @@ BUTTON_EVENT[dvTP1_CableBoxChannels,nCableBoxPresetBtns]{
 	
 	// send page change 
 	send_command dvTP1_TP_iPad, "'^SSH-2000,[Input Controls]TV - Keypad'";
-	send_command dvTP1_TP_iPad, "'@PPN-[paneRight]TV'";
-	
+	//send_command dvTP1_TP_iPad, "'@PPN-[paneRight]TV'"; 	-- popup 
     }
 }
 
@@ -2384,6 +2975,8 @@ DEFINE_PROGRAM
 [dvTP1_Bluray,_SCAN_FWD] = [vdvBluray,246]
 [dvTP1_Bluray,_SCAN_REV] = [vdvBluray,247]
 [dvTP1_Bluray,_POWER] = [vdvBluray,255]
+
+
 (***********************************************************)
 (*                     END OF PROGRAM                      *)
 (*        DO NOT PUT ANY CODE BELOW THIS COMMENT           *)
